@@ -28,6 +28,27 @@ app.get(['/search','/search/:data'],(req,res) => {
     }
 });
 
+const movies=[{title:'Jaws',year:1975 ,rating:8},
+{title:'Avatar',year:2009 ,rating:7.8},
+{title:'Brazil',year:1985 ,rating:8},
+{title:'الإرهاب والكباب‎',year:1975 ,rating:6.2}]
+
+
+app.post('/movies/create', (req, res) => {
+    res.send('Movie created successfully');
+  });
+  
+app.get('/movies/read', (req, res) => {
+    res.send({ status: 200, data: movies});
+  });
+  
+app.put('/movies/update', (req, res) => {
+    res.send('Movie updated successfully');
+  });
+  
+app.delete('/movies/delete', (req, res) => {
+    res.send('Movie deleted successfully');
+  });
 app.listen(port, () =>{
     
 })
