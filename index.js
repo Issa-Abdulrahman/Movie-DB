@@ -49,6 +49,25 @@ app.put('/movies/update', (req, res) => {
 app.delete('/movies/delete', (req, res) => {
     res.send('Movie deleted successfully');
   });
+
+app.get('/movies/read/by-date',(req,res) => {
+    const moviesByDate = [...movies].sort((a, b) => a.date-b.date);
+    res.json({status:200,data:moviesByDate});
+
+});
+
+app.get('/movies/read/by-rate',(req,res) => {
+    const moviesByDate = [...movies].sort((a, b) => b.rating-a.rating);
+    res.json({status:200,data:moviesByDate});
+
+});
+
+app.get('/movies/read/by-title',(req,res) => {
+    const moviesByDate = [...movies].sort((a, b) => a.title.localeCompare(b.title));
+    res.json({status:200,data:moviesByDate});
+
+});
+
 app.listen(port, () =>{
     
 })
