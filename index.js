@@ -34,7 +34,7 @@ const movies=[{title:'Jaws',year:1975 ,rating:8},
 {title:'الإرهاب والكباب‎',year:1975 ,rating:6.2}]
 
 
-app.post('/movies/create', (req, res) => {
+app.get('/movies/create', (req, res) => {
     res.send('Movie created successfully');
   });
   
@@ -42,11 +42,11 @@ app.get('/movies/read', (req, res) => {
     res.send({ status: 200, data: movies});
   });
   
-app.put('/movies/update', (req, res) => {
+app.get('/movies/update', (req, res) => {
     res.send('Movie updated successfully');
   });
   
-app.delete('/movies/delete', (req, res) => {
+app.get('/movies/delete', (req, res) => {
     res.send('Movie deleted successfully');
   });
 
