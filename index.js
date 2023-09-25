@@ -6,17 +6,17 @@ app.get('/',(req,res) => (
 ));
 
 app.get('/test',(req,res) => (
-    res.json({status:200,message:"ok"})
+    res.status(200).json({status:200,message:"ok"})
 ));
 
 const now= new Date();
 app.get('/time',(req,res)=>{
-    res.json({status:200,message:now.getHours() +":"+now.getSeconds()})
+    res.status(200).json({status:200,message:now.getHours() +":"+now.getSeconds()})
 });
 
 app.get('/hello/:id?',(req,res) => {
     const id = req.params.id;
-    res.json({status:200, message:`hello, ${id}`})
+    res.status(200).json({status:200, message:`hello, ${id}`})
 }); 
 
 app.get(['/search','/search/:data'],(req,res) => {
@@ -52,19 +52,19 @@ app.get('/movies/delete', (req, res) => {
 
 app.get('/movies/read/by-date',(req,res) => {
     const moviesByDate = [...movies].sort((a, b) => a.date-b.date);
-    res.json({status:200,data:moviesByDate});
+    res.status(200).json({status:200,data:moviesByDate});
 
 });
 
 app.get('/movies/read/by-rate',(req,res) => {
     const moviesByDate = [...movies].sort((a, b) => b.rating-a.rating);
-    res.json({status:200,data:moviesByDate});
+    res.status(200).json({status:200,data:moviesByDate});
 
 });
 
 app.get('/movies/read/by-title',(req,res) => {
     const moviesByDate = [...movies].sort((a, b) => a.title.localeCompare(b.title));
-    res.json({status:200,data:moviesByDate});
+    res.status(200).json({status:200,data:moviesByDate});
 
 });
 
