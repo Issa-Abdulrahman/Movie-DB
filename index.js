@@ -68,6 +68,18 @@ app.get('/movies/read/by-title',(req,res) => {
 
 });
 
+app.get('/movies/read/id/:id', (req,res) => {
+     let movieId=req.params.id;
+     
+    if((movieId)>0 && (movieId)<movies.length){
+        res.status(200).json({status:200,data:movies[req.params.id]})
+    }else{
+        res.status(404).json({status:404, error: true,message:`${req.params.id} does not exist`})
+    }
+    
+
+});
+
 app.listen(port, () =>{
     
 })
