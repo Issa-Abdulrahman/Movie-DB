@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express();
+const mongoose = require('mongoose');
+const url ="mongodb+srv://isaiahabdulrahman:Issa@mongodb@2023@cluster0.7pf5qnh.mongodb.net/"
 const port= 10452
 app.get('/',(req,res) => (
     res.json("OK")
@@ -129,8 +131,40 @@ app.put('/movies/update:id', (req,res) => {
     res.status(200).json({status:200,message:`Movie of id ${movieId} is updated successfully`,data: movies});
 })
 
+mongoose.connect(url); 
+const db=mongoose.connection;
+
+const movieSchema = new mongoose.Schema({
+  title: String,
+  year: Number,
+  rating: Number
+});
+
+const Movie = mongoose.model('Movie', movieSchema);
+
+
+app.get('/movies/add', async (req, res) => {
+  const title = req.query.title;
+  const year = req.query.year;
+  const rating = parseFloat(req.query.rating);
+
+  if (!title || !year || year.length !== 4 || isNaN(parseInt(year)) || isNaN(rating)) {
+    res.status(403).json({ status: 403, error: true, message: 'You cannot create a movie without providing a title and a valid 4-digit year.' });
+    return;
+  }
+
+  const newMovie = new Movie({ title, year: parseInt(year), rating });
+  await newMovie.save();
+
+  const movies = await Movie.find({});
+  res.json({ status: 200, data: movies });
+});
+
+
+
 app.listen(port, () =>{
     
 })
+
 
 
