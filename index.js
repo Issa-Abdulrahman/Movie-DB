@@ -34,7 +34,7 @@ const movies=[{title:'Jaws',year:1975 ,rating:8},
 {title:'الإرهاب والكباب‎',year:1975 ,rating:6.2}]
 
 
-app.get('/movies/create', (req, res) => {
+app.post('/movies/create', (req, res) => {
     res.send('Movie created successfully');
   });
   
@@ -42,11 +42,11 @@ app.get('/movies/read', (req, res) => {
     res.send({ status: 200, data: movies});
   });
   
-app.get('/movies/update', (req, res) => {
+app.put('/movies/update', (req, res) => {
     res.send('Movie updated successfully');
   });
   
-app.get('/movies/delete', (req, res) => {
+app.delete('/movies/delete', (req, res) => {
     res.send('Movie deleted successfully');
   });
 
@@ -80,7 +80,7 @@ app.get('/movies/read/id/:id', (req,res) => {
 
 });
 
-app.get('/movies/add',(req,res) => {
+app.post('/movies/add',(req,res) => {
     const title = req.query.title;
     const year = parseInt(req.query.year);
     const rating= parseFloat(req.query.rate);
@@ -97,7 +97,7 @@ app.get('/movies/add',(req,res) => {
 
     }
 })
-app.get('/movies/delete:id',(req,res) => {
+app.delete('/movies/delete:id',(req,res) => {
     const movieId=req.params.id;
     const index= movies.findIndex( movie =>  movie.id===movieId);
     if(index!==-1){
@@ -108,7 +108,7 @@ app.get('/movies/delete:id',(req,res) => {
         res.status(404).json({status:404, error:true, message:`the movie ${movieId} does not exist`});
     }
 })
-app.get('/movies/update:id', (req,res) => {
+app.put('/movies/update:id', (req,res) => {
     const movieId= req.params.id;
     const newMovieTitle= req.params.title;
     const newMovieYear=parseInt(req.params.year);
