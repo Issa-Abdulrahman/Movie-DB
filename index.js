@@ -83,7 +83,7 @@ app.get('/movies/read/id/:id', (req,res) => {
 app.get('/movies/add',(req,res) => {
     const title = req.query.title;
     const year = parseInt(req.query.year);
-    const rating= req.query.rate;
+    const rating= parseFloat(req.query.rate);
     
 
     if(!(title) || isNaN(year) || !year.toString().length==4 || !(rating)){
@@ -91,8 +91,8 @@ app.get('/movies/add',(req,res) => {
     }
     else {
         const newRate=rating || "4";
-        const newMovie={title:title,year:year,rating:newRate};
-        movies.push(newMovie);
+        const newMovies={title:title,year:year,rating:newRate};
+        movies.push(newMovies);
         res.status(200).json({status:200,data:movies})
 
     }
@@ -107,6 +107,26 @@ app.get('/movies/delete:id',(req,res) => {
     else{
         res.status(404).json({status:404, error:true, message:`the movie ${movieId} does not exist`});
     }
+})
+app.get('/movies/update:id', (req,res) => {
+    const movieId= req.params.id;
+    const newMovieTitle= req.params.title;
+    const newMovieYear=parseInt(req.params.year);
+    const newMovieRating=parseFloat(req.params.rate);
+    let newMovie= movies.find(movie=> movie.id===movieId);
+    if(!newMovie){
+        res.status(404).json({status:404, error:true, message:`The movie of id ${movieId} does not exist`});
+    }
+    if(newMovieTitle){
+        newMovie.title=newMovieTitle;
+    }
+    if(newMovieYear){
+        newMovie.year=newMovieYear;
+    }
+    if(newMovieRating){
+        newMovie.rate=newMovieRating;
+    }
+    res.status(200).json({status:200,message:`Movie of id ${movieId} is updated successfully`,data: movies});
 })
 
 app.listen(port, () =>{
